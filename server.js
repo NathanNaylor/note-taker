@@ -36,11 +36,7 @@ app.post('/api/notes', (req, res) => {
 
     postNotes(req, res);
 
-    fs.writeFile(dbFile, JSON.stringify(notesDB), function(err, result) {
-        if (err) {
-            console.log('error', err);
-        }
-    });
+    writeNotes()
 })
 
 app.delete('/api/notes/:id', (req, res) => {
@@ -49,6 +45,7 @@ app.delete('/api/notes/:id', (req, res) => {
 
     res.json(notesDB)
 
+    writeNotes();
 
 })
 
@@ -77,7 +74,11 @@ function checkIDs() {
 }
 
 function writeNotes() {
-
+    fs.writeFile(dbFile, JSON.stringify(notesDB), function(err, result) {
+        if (err) {
+            console.log('error', err);
+        }
+    });
 }
 
 // Starts the server to begin listening

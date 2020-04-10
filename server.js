@@ -35,10 +35,9 @@ app.get("/api/notes", (req, res) => {
 app.post('/api/notes', (req, res) => {
     const noteInput = req.body;
     lastId += 1;
+    checkIDs();
 
     noteInput.id = lastId;
-
-    console.log(noteInput);
 
     notesDB.push(noteInput);
 
@@ -56,12 +55,25 @@ app.delete('/api/notes/:id', (req, res) => {
     notesDB = notesDB.filter(note => note.id !== parseInt(req.params.id))
 
     res.json(notesDB)
+
+    fs.writeFile(dbFile, JSON.stringify(notesDB), function(err, result) {
+        if (err) {
+            console.log('error', err);
+        }
+    });
 })
 
 function getNotes() {
-    console.log(notesDB)
     return notesDB
 };
+
+function checkIDs() {
+    notesDB.forEach(element => {
+        if (element.id == lastId) {
+            lastId = element.id++
+        }
+    });
+}
 
 
 // Starts the server to begin listening

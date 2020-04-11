@@ -15,9 +15,12 @@ const PORT = 3000;
 // body property on the response object passed to our route handlers.
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+//makes public root directory for static assets
 app.use(
     express.static(path.join(__dirname, "public"))
 );
+
 
 app.get("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/notes.html"))
@@ -28,10 +31,12 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/index.html"))
 })
 
+//displays db.json content
 app.get("/api/notes", (req, res) => {
     res.json(getNotes());
 })
 
+//adds new notes to db.json
 app.post('/api/notes', (req, res) => {
 
     postNotes(req, res);
@@ -39,6 +44,7 @@ app.post('/api/notes', (req, res) => {
     writeNotes();
 })
 
+//removes notes based on id
 app.delete('/api/notes/:id', (req, res) => {
 
     deleteNotes(req, res);
@@ -63,6 +69,7 @@ function postNotes(req, res) {
     res.json(noteInput);
 };
 
+//checks if an id has already appeared before assigning it
 function checkIDs() {
     notesDB.forEach(element => {
         if (element.id == lastId) {
@@ -71,6 +78,7 @@ function checkIDs() {
     });
 };
 
+//function for call write file multiple times
 function writeNotes() {
     fs.writeFile(dbFile, JSON.stringify(notesDB), function(err, result) {
         if (err) {

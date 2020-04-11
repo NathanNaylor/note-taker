@@ -6,6 +6,9 @@
 
 ## Description
 This is an application designed to take user input of notes and post them to the webpage through server routes. It also allows you to delete each not using a unique id, and view previously written notes. This app was created for me to test my knowledge of routing and learn how to use the express.static method.
+<img src="assets/home page.png" alt="Note Taker Homepage" >
+<img src="assets/Note entry.png" alt="Note Entering Page">
+<img src="assets/note 1.png" alt="Note Entering Page With One New Note">
 
 ## Table of Contents
 

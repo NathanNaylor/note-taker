@@ -27,12 +27,9 @@ app.get("/notes", (req, res) => {
 
 })
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/index.html"))
-})
 
 //displays db.json content
-app.get("/api/notes", (req, res) => {
+app.get('/api/notes', (req, res) => {
     res.json(getNotes());
 })
 
@@ -53,6 +50,10 @@ app.delete('/api/notes/:id', (req, res) => {
 
 })
 
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "/public/index.html"))
+})
+
 function getNotes() {
     return notesDB
 };
@@ -60,8 +61,6 @@ function getNotes() {
 function postNotes(req, res) {
     const noteInput = req.body;
     lastId += 1;
-    checkIDs();
-
     noteInput.id = lastId;
 
     notesDB.push(noteInput);
@@ -69,14 +68,6 @@ function postNotes(req, res) {
     res.json(noteInput);
 };
 
-//checks if an id has already appeared before assigning it
-function checkIDs() {
-    notesDB.forEach(element => {
-        if (element.id == lastId) {
-            lastId = element.id++
-        }
-    });
-};
 
 //function for call write file multiple times
 function writeNotes() {

@@ -8,7 +8,7 @@ const dbFile = path.join(__dirname, "db/db.json")
 let lastId = notesDB.length;
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Sets up the Express app to handle data parsing
 // This middleware is responsible for constructing the
